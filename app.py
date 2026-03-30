@@ -1,6 +1,7 @@
 import streamlit as st
 import numpy as np
 import tensorflow as tf
+import keras
 import os
 import random
 from PIL import Image, ImageOps
@@ -69,7 +70,7 @@ def load_model_cached():
             gdown.download(url, model_path, quiet=False)
     
     try:
-        return tf.keras.models.load_model(model_path, compile=False)
+        return keras.models.load_model(model_path, compile=False)
     except Exception as e:
         st.error(f"Model yükleme hatası: {e}")
         st.stop()
