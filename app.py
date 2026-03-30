@@ -1,7 +1,6 @@
 import streamlit as st
 import numpy as np
 import tensorflow as tf
-import keras
 import os
 import random
 from PIL import Image, ImageOps
@@ -14,7 +13,7 @@ from sklearn.metrics import (
     roc_curve, auc, classification_report
 )
 from sklearn.preprocessing import label_binarize
-from keras.applications.resnet50 import preprocess_input
+from tensorflow.keras.applications.resnet50 import preprocess_input
 # ─────────────────────────────────────────────
 # 1. TEMEL AYARLAR VE SABİTLER
 # ─────────────────────────────────────────────
@@ -61,20 +60,18 @@ import gdown
 def load_model_cached():
     model_path = 'bloodcell_finetuned.keras'
     
-    # Dosya yoksa Drive'dan indir
     if not os.path.exists(model_path):
         with st.spinner("Yapay zeka modeli buluttan indiriliyor, lütfen bekleyin..."):
-            # BURADAKİ TIRNAK İÇİNE KENDİ FILE_ID'Nİ YAPIŞTIR
             file_id = '1GhVqCQcPSVqxxMN7bNATuxBLqgiz1ihp' 
             url = f'https://drive.google.com/uc?id={file_id}'
             gdown.download(url, model_path, quiet=False)
     
     try:
-        return tf.keras.models.load_model(model_path, compile=False)
+        model = tf.keras.models.load_model(model_path, compile=False)
+        return model   # 🔥 BU SATIR ÇOK ÖNEMLİ
     except Exception as e:
         st.error(f"Model yükleme hatası: {e}")
         st.stop()
-
 @st.cache_data
 def load_test_data():
     """X_test ve y_test demo dosyalarını yükler."""
