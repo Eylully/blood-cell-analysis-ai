@@ -14,7 +14,7 @@ from sklearn.metrics import (
     roc_curve, auc, classification_report
 )
 from sklearn.preprocessing import label_binarize
-from tensorflow.keras.applications.resnet50 import preprocess_input
+from keras.applications.resnet50 import preprocess_input
 # ─────────────────────────────────────────────
 # 1. TEMEL AYARLAR VE SABİTLER
 # ─────────────────────────────────────────────
@@ -70,7 +70,7 @@ def load_model_cached():
             gdown.download(url, model_path, quiet=False)
     
     try:
-        return keras.models.load_model(model_path, compile=False)
+        return tf.keras.models.load_model(model_path, compile=False)
     except Exception as e:
         st.error(f"Model yükleme hatası: {e}")
         st.stop()
