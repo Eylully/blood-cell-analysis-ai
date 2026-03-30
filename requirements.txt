@@ -5,5 +5,5 @@ scikit-learn
 matplotlib
 seaborn
 Pillow
-tensorflow-cpu
+tensorflow>=2.16.1
 gdown
